@@ -24,11 +24,11 @@ $course = $_POST['course'];
 $year = $_POST['year'];
 
 
-$sql = "INSERT INTO enroll (username, password, email, elemName, elemYear, juniorName, juniorYear, seniorName, seniorYear, lastname, firstname, middlename, sex, dob, phonenumber, guardianName, guardianPhoneNumber, guardianAddress, course, year)
-VALUES ('$username', '$password', '$email', '$elemName', '$elemYear', '$juniorName', '$juniorYear', '$seniorName', '$seniorYear', '$lastname', '$firstname', '$middlename', '$sex', '$dob', '$phonenumber', '$guardianName', '$guardianPhoneNumber', '$guardianAddress', '$course', '$year')";
+$sql = "INSERT INTO enroll (username, password, email, elemName, elemYear, juniorName, juniorYear, seniorName, seniorYear, lastname, firstname, middlename, sex, dob, phonenumber, guardianName, guardianPhoneNumber, guardianAddress, course, year, status)
+VALUES ('$username@student', '$password', '$email', '$elemName', '$elemYear', '$juniorName', '$juniorYear', '$seniorName', '$seniorYear', '$lastname', '$firstname', '$middlename', '$sex', '$dob', '$phonenumber', '$guardianName', '$guardianPhoneNumber', '$guardianAddress', '$course', '$year', 'PENDING')";
 
 if ($conn->query($sql) === TRUE) {
-  $_SESSION['status'] = "Enrollment Successful";
+  $_SESSION['status'] = "Your Submission is awaiting for approval, you can proceed to the registrar to enroll your application and account";
   header("Location: ../enroll.php");
 } else {
   echo "Error: " . $sql . "<br>" . $conn->error;

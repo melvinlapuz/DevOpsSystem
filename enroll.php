@@ -58,19 +58,12 @@ if (isset($_SESSION['status'])){
     <table class="table table-bordered">
     <thead>
       <tr>
-        <th>Date</th>
-        <th>Time</th>
-        <th>Slots</th>
-        <th>Action</th>
-
+        
       </tr>
     </thead>
     <tbody>
       <tr>
-        <td>December 26, 2025|Friday</td>
-        <td>12:00 AM - 1:00 1AM</td>
-        <td>12</td>
-        <td><input type="radio" name="appointmentID" value="19" required=""></td>
+        
       </tr>
     </tbody>
   </table>
@@ -82,8 +75,8 @@ if (isset($_SESSION['status'])){
       <div class="mb-3">
         <label for="username" class="form-label">Username:</label>
         <div class="input-group">
-          <input type="text" class="form-control" id="Username" name="username" placeholder="Username" required>
-          <div class="input-group-text">@Student</div>
+          <input type="text" class="form-control" id="Username" name="username" placeholder="Enter your username" required>
+          <div class="input-group-text">@student</div>
         </div>
       </div>
         <div class="mb-3">
@@ -108,7 +101,7 @@ if (isset($_SESSION['status'])){
     </div>
     <div class="col">
       <div data-mdb-input-init class="form-outline">
-        <input type="text" id="elemYear" name="elemYear" class="form-control" placeholder="Year Graduated"/ required>
+        <input type="text" id="elemYear" name="elemYear" maxlength="4" class="form-control" placeholder="Year Graduated"/ required>
       </div>
     </div>
   </div>
@@ -121,7 +114,7 @@ if (isset($_SESSION['status'])){
     </div>
     <div class="col">
       <div data-mdb-input-init class="form-outline">
-        <input type="text" id="juniorYear" name="juniorYear" class="form-control" placeholder="Year Graduated"/ required>
+        <input type="text" id="juniorYear" name="juniorYear" maxlength="4" class="form-control" placeholder="Year Graduated"/ required>
       </div>
     </div>
   </div>
@@ -134,7 +127,7 @@ if (isset($_SESSION['status'])){
     </div>
     <div class="col">
       <div data-mdb-input-init class="form-outline">
-        <input type="text" id="seniorYear" name="seniorYear" class="form-control" placeholder="Year Graduated"/ required>
+        <input type="text" id="seniorYear" name="seniorYear" maxlength="4" class="form-control" placeholder="Year Graduated"/ required>
       </div>
     </div>
   </div>
@@ -185,7 +178,7 @@ if (isset($_SESSION['status'])){
   <label for="Number" class="form-label">Contact Number:</label>
     <div class="input-group mb-3">
       <div class="input-group-text">+63</div>
-      <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" placeholder="9XXXXXXXXX" required>
+      <input type="text" class="form-control" id="phoneNumber" maxlength="10" name="phoneNumber" placeholder="9XXXXXXXXX" required>
     </div>
 
     <label for="address" class="form-label">Home Address:</label>
@@ -203,7 +196,7 @@ if (isset($_SESSION['status'])){
         <label for="Gnumber" class="form-label">Guardian's Contact Number:</label>
         <div class="input-group">
           <div class="input-group-text">+63</div>
-          <input type="text" class="form-control" id="guardianPhoneNumber" name="guardianPhoneNumber" placeholder="9XXXXXXXXX" required>
+          <input type="text" class="form-control" id="guardianPhoneNumber" maxlength="10" name="guardianPhoneNumber" placeholder="9XXXXXXXXX" required>
         </div>
       </div>
     </div>
@@ -346,12 +339,6 @@ if (isset($_SESSION['status'])){
                 <input type="password" name="password" class="password" id="pwd" placeholder="Password">
                 <i class="fa-solid fa-eye me-3 fs-5 cursor-pointer" id="icon"></i>
             </div>
-            <?php
-                if (isset($_SESSION['error'])){
-                    echo '<div class="mb-2" style="color: red;"><h6>'.$_SESSION['error'].'</h6></div>';
-                    unset($_SESSION['error']);
-                }
-                ?>
             <button class="btn mt-3">Login</button>
         </form>
         <div class="text-center fs-6 mb-3">
@@ -386,6 +373,13 @@ if (isset($_SESSION['status'])){
       form.submit();
     } else {
       form.reportValidity();
+    }
+  });
+
+  // Prevent typing '@' in username field
+  document.getElementById('Username').addEventListener('keydown', function(e) {
+    if (e.key === '@') {
+      e.preventDefault();
     }
   });
 </script>

@@ -40,6 +40,14 @@ include 'config/plugins.php';
     </div>
   </div>
 </nav>
+<?php
+if (isset($_SESSION['error'])){
+    echo '<div class="alert alert-danger mb-0" role="alert">
+    <i class="fa-solid fa-exclamation-triangle"></i>
+    '.$_SESSION['error'].'</div>';
+    unset($_SESSION['error']);
+}
+?>
 
 <!--yung blue welcome section-->
 <div class="container-main">
@@ -104,12 +112,6 @@ include 'config/plugins.php';
                 <input type="password" name="password" class="password" id="pwd" placeholder="Password">
                 <i class="fa-solid fa-eye me-3 fs-5 cursor-pointer" id="icon"></i>
             </div>
-            <?php
-                if (isset($_SESSION['error'])){
-                    echo '<div class="mb-2" style="color: red;"><h6>'.$_SESSION['error'].'</h6></div>';
-                    unset($_SESSION['error']);
-                }
-                ?>
             <button class="btn mt-3">Login</button>
         </form>
         <div class="text-center fs-6 mb-3">

@@ -43,12 +43,15 @@ include 'config/plugins.php';
 
 
 
+
+
   <div class=" py-5 px-3 h-50">
     <div class="row d-flex justify-content-center align-items-center h-100">
       <div class="col-xl-10">
         <div class="card rounded-3 text-black" style="box-shadow: 0 15px 17px rgba(0,0,0,0.1);">
           <div class="row g-0">
             <div class="col-lg-7">
+              
               <div class="card-body p-md-5 mx-md-4">
 
                 <div>
@@ -74,25 +77,30 @@ include 'config/plugins.php';
                       <textarea class="form-control" id="message" name="message" rows="4" placeholder="Enter your message" required></textarea>
                     </div>
 
-                    <label class="form-label" for="captcha">Captcha:</label>
+                    
                     <div class="row mb-1">
                       <div class="col">
+                        <label class="form-label" for="captcha">Captcha:</label>
                         <div data-mdb-input-init class="form-outline">
                           <p id="captchaDisplay" class="fw-bold fs-5"></p>
                         </div>
                       </div>
                       <div class="col">
+                        <label class="form-label" for="message">Code:</label>
                         <div data-mdb-input-init class="form-outline">
                           <input type="text" id="captchaInput" name="captcha" class="form-control" placeholder="Enter code" required/>
                         </div>
                       </div>
                     </div>
-                    <div id="captchaError" class="text-danger mt-2" style="display: none;">Captcha code is incorrect. Please try again.</div>
-                    <?php
-                    if (isset($_SESSION['success'])){
-                    echo '<div class="mt-2 text-success"><h6>'.$_SESSION['success'].'</h6></div>';
-                    unset($_SESSION['success']);
-                    }?>
+                    <div id="captchaError" class="alert alert-danger mt-2" role="alert" style="display: none;"><i class="fa fa-exclamation-circle"></i>Captcha code is incorrect. Please try again.</div>
+                   <?php
+                      if (isset($_SESSION['success'])){
+                          echo '<div class="containermt-4 alert alert-success" role="alert">
+                          <i class="bi bi-envelope-check-fill"></i>
+                          '.$_SESSION['success'].'</div>';
+                          unset($_SESSION['success']);
+                      }
+                      ?>
                     <!-- Submit button -->
                     <button id="sendBtn" data-mdb-ripple-init type="button" class="btn btn-primary btn-block mt-3 ps-3 pe-3">Send</button>
                   </form>
@@ -134,12 +142,6 @@ include 'config/plugins.php';
                 <input type="password" name="password" class="password" id="pwd" placeholder="Password">
                 <i class="fa-solid fa-eye me-3 fs-5 cursor-pointer" id="icon"></i>
             </div>
-            <?php
-                if (isset($_SESSION['error'])){
-                    echo '<div class="mb-2" style="color: red;"><h6>'.$_SESSION['error'].'</h6></div>';
-                    unset($_SESSION['error']);
-                }
-                ?>
             <button class="btn mt-3">Login</button>
         </form>
         <div class="text-center fs-6 mb-3">
@@ -159,8 +161,17 @@ include 'config/plugins.php';
     eyeIcon.className = `fa-solid fa-eye${passwordInput.type === "password" ? "fa-solid fa-eye me-3 fs-5 cursor-pointer" : "-slash me-3 fs-5 cursor-pointer"}`;
   });
 
+  function generateCaptcha() {
+    const chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+    let result = '';
+    for (let i = 0; i < 6; i++) {
+      result += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    return result;
+  }
+
   // Generate random captcha
-  let captchaCode = Math.floor(100000 + Math.random() * 900000).toString();
+  let captchaCode = generateCaptcha();
   document.getElementById('captchaDisplay').textContent = captchaCode;
 
   // Handle send button click
@@ -173,7 +184,7 @@ include 'config/plugins.php';
     } else {
       errorDiv.style.display = 'block';
       // Regenerate captcha on failure
-      captchaCode = Math.floor(100000 + Math.random() * 900000).toString();
+      captchaCode = generateCaptcha();
       document.getElementById('captchaDisplay').textContent = captchaCode;
       document.getElementById('captchaInput').value = '';
     }
